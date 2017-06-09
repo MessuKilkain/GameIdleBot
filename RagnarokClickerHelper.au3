@@ -34,10 +34,19 @@ Local $numberOfClicks = 1
 
 Func StopLoop()
 	$continueLoop = false
+ EndFunc
+
+Func TimeToLogginHumanReadableString($time)
+   $milliseconds = Mod(floor($time),1000)
+   $seconds = Mod(floor($time/(1000)),60)
+   $minutes = Mod(floor($time/(60*1000)),60)
+   $hours = Mod(floor($time/(60*60*1000)),24)
+   $days = floor($time/(24*60*60*1000))
+   Return StringFormat("%02dd%02dh%02dm%02ds%04d",$days,$hours,$minutes,$seconds,$milliseconds)
 EndFunc
 
 Func CustomLog( $logMessage )
-   ConsoleWrite( StringFormat("%08.2f",TimerDiff($timer)) & " " & $logMessage & @CRLF )
+   ConsoleWrite( TimeToLogginHumanReadableString(TimerDiff($timer)) & " " & $logMessage & @CRLF )
 EndFunc
 
 ;~ HotKeySet("h", "StopLoop")
