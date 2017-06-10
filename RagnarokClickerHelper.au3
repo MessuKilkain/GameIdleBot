@@ -10,15 +10,17 @@ Local $loopTimeCounter = 0
 Local $UseLoopCounterInsteadOfRealTime = False
 
 Local $AutomaticModeTogglePeriod = 2.5*60*1000
-Local $Skill_1_TriggerPeriod = 1*10*60*1000
-Local $Skill_2_TriggerPeriod = 1*10*60*1000
-Local $Skill_3_TriggerPeriod = 1*30*60*1000
-Local $Skill_4_TriggerPeriod = 1*30*60*1000
-Local $Skill_5_TriggerPeriod = 1*60*60*1000
-Local $Skill_6_TriggerPeriod = 8*60*60*1000
-Local $Skill_7_TriggerPeriod = 1*60*60*1000
-Local $Skill_8_TriggerPeriod = 1*60*60*1000
-Local $Skill_9_TriggerPeriod = 1*60*60*1000
+
+Local $SkillSafeMargin = 1*01*01*0200
+Local $Skill_1_TriggerPeriod = 1*10*60*1000 + $SkillSafeMargin
+Local $Skill_2_TriggerPeriod = 1*10*60*1000 + $SkillSafeMargin
+Local $Skill_3_TriggerPeriod = 1*30*60*1000 + $SkillSafeMargin
+Local $Skill_4_TriggerPeriod = 1*30*60*1000 + $SkillSafeMargin
+Local $Skill_5_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
+Local $Skill_6_TriggerPeriod = 8*60*60*1000 + $SkillSafeMargin
+Local $Skill_7_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
+Local $Skill_8_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
+Local $Skill_9_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
 
 Local $LastAdventurerHiringPeriod = 1*01*60*1000
 Local $OldBlueBoxCheckPeriod = 1*01*60*1000
