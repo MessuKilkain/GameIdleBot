@@ -166,7 +166,7 @@ Func RunCheckLoop()
 		 EndIf
 
 		 If $LastAdventurerHiringPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $LastAdventurerHiringPeriod ) <> Floor( $loopTimeCounter / $LastAdventurerHiringPeriod ) ) ) Then
-			; Hiring last Adventurer available
+			; Hiring/Upgrading last Adventurer available
 			CustomLog( "Hiring/Upgrading last Adventurer available" )
 
 			; Tab Adventurer
