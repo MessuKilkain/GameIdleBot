@@ -142,6 +142,11 @@ Func RunCheckLoop()
 			; Y : 370
 			MouseClick("left", 500, 370, 1, 4)
 
+			; Coordinates to button buy all upgrades when scroll down to max in adventurer tab
+			; X : 460
+			; Y : 560
+			MouseClick("left", 460, 560, 1, 4)
+
 			; Restore previous mouse location
 			MouseMove( $mouseX, $mouseY, 4 )
 		 EndIf
