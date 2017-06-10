@@ -112,7 +112,7 @@ Func RunCheckLoop()
 
 		 If $LastAdventurerHiringPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $LastAdventurerHiringPeriod ) <> Floor( $loopTimeCounter / $LastAdventurerHiringPeriod ) ) ) Then
 			; Hiring last Adventurer available
-			CustomLog( "Hiring last Adventurer available" )
+			CustomLog( "Hiring/Upgrading last Adventurer available" )
 
 			; Tab Adventurer
 			; X : 58
@@ -133,6 +133,7 @@ Func RunCheckLoop()
 			   Sleep($mouseWheelPeriod)
 			Next
 
+			Sleep(100)
 			; Upgrade last adventurer
 			; X : 500
 			; Y : 500
@@ -141,6 +142,7 @@ Func RunCheckLoop()
 			; Y : 370
 			MouseClick("left", 500, 370, 1, 4)
 
+			; Restore previous mouse location
 			MouseMove( $mouseX, $mouseY, 4 )
 		 EndIf
 	  Else
