@@ -116,7 +116,7 @@ Func RunCheckLoop()
 		 If $UseLoopCounterInsteadOfRealTime Then
 			$loopTimeCounter += $loopSleep
 		 Else
-			$loopTimeCounter = TimerDiff($timer)
+			$loopTimeCounter = TimerDiff($activeLoopTimer)
 		 EndIf
 
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $AutomaticModeTogglePeriod, "a", "Toggle Automatic Mode" )
