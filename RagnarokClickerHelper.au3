@@ -162,6 +162,26 @@ Func RunCheckLoop()
 			; X : ???
 			; Y : ???
 
+			; Box Window Central Open button
+			; X : 585
+			; Y : 345
+			MouseClick("left", 585, 345, 1, 4 )
+			Sleep(500)
+			; Close Button
+			; X : 930
+			; Y : 150
+			MouseClick("left", 930, 150, 1, 4 )
+
+			; Box Right Open button
+			; X : 1120
+			; Y : 360
+			; Box Window Central Open button
+			; X : 570
+			; Y : 340
+			; Box Window Close button
+			; X : ???
+			; Y : ???
+
 			; Restore previous mouse location
 			MouseMove( $mouseX, $mouseY, 4 )
 
