@@ -24,6 +24,7 @@ Local $Skill_9_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
 
 Local $LastAdventurerHiringPeriod = 1*01*60*1000
 Local $OldBlueBoxCheckPeriod = 1*01*60*1000
+Local $NewEquipementBoxCheckPeriod = 1*10*60*1000
 
 ; Default
 Local $loopSleep = 50
@@ -162,7 +163,14 @@ Func RunCheckLoop()
 			; X : ???
 			; Y : ???
 
-			; Box Window Central Open button
+		 EndIf
+
+		 If $NewEquipementBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $NewEquipementBoxCheckPeriod ) <> Floor( $loopTimeCounter / $NewEquipementBoxCheckPeriod ) ) ) Then
+			; Checking New Equipement Box window
+			CustomLog( "Checking New Equipement Box window" )
+
+			; Box New Equipement Window
+			; Central Open button
 			; X : 585
 			; Y : 345
 			MouseClick("left", 585, 345, 1, 4 )
@@ -171,16 +179,6 @@ Func RunCheckLoop()
 			; X : 930
 			; Y : 150
 			MouseClick("left", 930, 150, 1, 4 )
-
-			; Box Right Open button
-			; X : 1120
-			; Y : 360
-			; Box Window Central Open button
-			; X : 570
-			; Y : 340
-			; Box Window Close button
-			; X : ???
-			; Y : ???
 
 			; Restore previous mouse location
 			MouseMove( $mouseX, $mouseY, 4 )
