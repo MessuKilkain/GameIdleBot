@@ -79,7 +79,7 @@ Func RunCheckLoop()
 
    ; Just idle around
    While $continueLoop
-	  $lastLoopTimeCounter = $loopTimeCounter
+	  $shouldAutomationBeActive = False
 	  If WinActive($ragnarokClickerWindowName) Then
 ;~ 		 CustomLog( "Windows is active" )
 		 ;$WindowPos = WinGetPos($ragnarokClickerWindowName)
@@ -95,10 +95,16 @@ Func RunCheckLoop()
 		 ;If $mouseX > 650 And $mouseX < 1130 And $mouseY > 150 And $mouseY < 500 Then
 		 If $mouseX > 700 And $mouseX < 1030 And $mouseY > 100 And $mouseY < 500 Then
 			MouseClick("left", $mouseX, $mouseY, $numberOfClicks, 1)
-			$loopTimeCounter += $loopSleep
-		 Else
-			$loopTimeCounter = 0
+			$shouldAutomationBeActive = True
 		 EndIf
+	  EndIf
+
+	  If Not $shouldAutomationBeActive Then
+		 $lastLoopTimeCounter = $loopTimeCounter
+		 $loopTimeCounter = 0
+	  Else
+		 $lastLoopTimeCounter = $loopTimeCounter
+		 $loopTimeCounter += $loopSleep
 
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $AutomaticModeTogglePeriod, "a", "Toggle Automatic Mode" )
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_6_TriggerPeriod, '-', "Use skill 6" )
@@ -185,8 +191,7 @@ Func RunCheckLoop()
 			; Restore previous mouse location
 			MouseMove( $mouseX, $mouseY, 4 )
 		 EndIf
-	  Else
-		 $loopTimeCounter = 0
+
 	  EndIf
 
 	  ;CustomLog( TimerDiff($timer) & " Before Sleep" & @CRLF )
