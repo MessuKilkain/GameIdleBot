@@ -152,6 +152,10 @@ Func RunCheckLoop()
 			; X : 875
 			; Y : 515
 			MouseClick("left", 875, 515, 1, 4 )
+			; #6
+			; X : 1050
+			; Y : 450
+			MouseClick("left", 1050, 450, 1, 4 )
 			; #N
 			; X : ???
 			; Y : ???
