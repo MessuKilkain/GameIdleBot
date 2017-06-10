@@ -19,6 +19,7 @@ Local $Skill_8_TriggerPeriod = 1*60*60*1000
 Local $Skill_9_TriggerPeriod = 1*60*60*1000
 
 Local $LastAdventurerHiringPeriod = 1*01*60*1000
+Local $OldBlueBoxCheckPeriod = 1*01*60*1000
 
 ; Default
 Local $loopSleep = 50
@@ -109,6 +110,40 @@ Func RunCheckLoop()
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_3_TriggerPeriod, '"', "Use skill 3" )
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_4_TriggerPeriod, "'", "Use skill 4" )
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_7_TriggerPeriod, 'è', "Use skill 7" )
+
+		 If $OldBlueBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $OldBlueBoxCheckPeriod ) <> Floor( $loopTimeCounter / $OldBlueBoxCheckPeriod ) ) ) Then
+			; Checking Old Blue Boxes possible locations
+			CustomLog( "Checking Old Blue Boxes possible locations" )
+
+			; Coordinates of OldBlueBoxes (How many different ?)
+			; #1
+			; X : 530
+			; Y : 490
+			MouseClick("left", 530, 490, 1, 4 )
+			; #2
+			; X : 760
+			; Y : 380
+			MouseClick("left", 760, 380, 1, 4 )
+			; #3
+			; X : 1000
+			; Y : 450
+			MouseClick("left", 1000, 450, 1, 4 )
+			; #4
+			; X : 750
+			; Y : 430
+			MouseClick("left", 750, 430, 1, 4 )
+			; #5
+			; X : 875
+			; Y : 515
+			MouseClick("left", 875, 515, 1, 4 )
+			; #N
+			; X : ???
+			; Y : ???
+
+			; Restore previous mouse location
+			MouseMove( $mouseX, $mouseY, 4 )
+
+		 EndIf
 
 		 If $LastAdventurerHiringPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $LastAdventurerHiringPeriod ) <> Floor( $loopTimeCounter / $LastAdventurerHiringPeriod ) ) ) Then
 			; Hiring last Adventurer available
