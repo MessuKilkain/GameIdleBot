@@ -9,6 +9,7 @@ Local $activeLoopTimer = Null
 Local $loopTimeCounter = 0
 Local $UseLoopCounterInsteadOfRealTime = False
 
+Local $EnableAutomaticModeToggle = True
 Local $AutomaticModeTogglePeriod = 2.5*60*1000
 
 Local $SkillSafeMargin = 1*01*01*0200
@@ -119,7 +120,9 @@ Func RunCheckLoop()
 			$loopTimeCounter = TimerDiff($activeLoopTimer)
 		 EndIf
 
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $AutomaticModeTogglePeriod, "a", "Toggle Automatic Mode" )
+		 If $EnableAutomaticModeToggle Then
+			SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $AutomaticModeTogglePeriod, "a", "Toggle Automatic Mode" )
+		 EndIf
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_6_TriggerPeriod, '-', "Use skill 6" )
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_8_TriggerPeriod, '_', "Use skill 8" )
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_5_TriggerPeriod, '(', "Use skill 5" )
