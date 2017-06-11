@@ -142,65 +142,11 @@ Func RunCheckLoop()
 		 EndIf
 
 		 If $NewEquipementBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $NewEquipementBoxCheckPeriod ) <> Floor( $loopTimeCounter / $NewEquipementBoxCheckPeriod ) ) ) Then
-			; Checking New Equipement Box window
-			CustomLog( "Checking New Equipement Box window" )
-
-			; Box New Equipement Window
-			; Central Open button
-			; X : 585
-			; Y : 345
-			MouseClick("left", 585, 345, 1, 4 )
-			Sleep(500)
-			; Close Button
-			; X : 930
-			; Y : 150
-			MouseClick("left", 930, 150, 1, 4 )
-
-			; Restore previous mouse location
-			MouseMove( $LastRelativeMouseX, $LastRelativeMouseY, 4 )
-
+			CheckNewEquipementBox()
 		 EndIf
 
 		 If $LastAdventurerHiringPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $LastAdventurerHiringPeriod ) <> Floor( $loopTimeCounter / $LastAdventurerHiringPeriod ) ) ) Then
-
-			; Hiring/Upgrading last Adventurer available
-			CustomLog( "Hiring/Upgrading last Adventurer available" )
-
-			; Tab Adventurer
-			; X : 58
-			; Y : 158
-			Sleep(50)
-			MouseClick("left", 58, 158, 1, 4 )
-			Sleep(100)
-
-			; Refresh Tab Adventurer scroll position to max bottom
-			$mouseWheelStep = 1
-			$mouseWheelPeriod = 10
-			For $indexOfScroll = 0 To 1 Step $mouseWheelStep
-			   MouseWheel( $MOUSE_WHEEL_UP, $mouseWheelStep )
-			   Sleep($mouseWheelPeriod)
-			Next
-			For $indexOfScroll = 0 To 30 Step $mouseWheelStep
-			   MouseWheel( $MOUSE_WHEEL_DOWN, $mouseWheelStep )
-			   Sleep($mouseWheelPeriod)
-			Next
-
-			Sleep(100)
-			; Upgrade last adventurer
-			; X : 500
-			; Y : 500
-			; Upgrade before last adventurer
-			; X : 500
-			; Y : 370
-			MouseClick("left", 500, 370, 1, 4)
-
-			; Coordinates to button buy all upgrades when scroll down to max in adventurer tab
-			; X : 460
-			; Y : 560
-			MouseClick("left", 460, 560, 1, 4)
-
-			; Restore previous mouse location
-			MouseMove( $LastRelativeMouseX, $LastRelativeMouseY, 4 )
+			HireLastAdventurerAvailable()
 		 EndIf
 
 	  EndIf
@@ -242,6 +188,66 @@ Func CheckOldBlueBoxesLocations()
    ; #N
    ; X : ???
    ; Y : ???
+
+   ; Restore previous mouse location
+   MouseMove( $LastRelativeMouseX, $LastRelativeMouseY, 4 )
+EndFunc
+
+Func CheckNewEquipementBox()
+   ; Checking New Equipement Box window
+   CustomLog( "Checking New Equipement Box window" )
+
+   ; Box New Equipement Window
+   ; Central Open button
+   ; X : 585
+   ; Y : 345
+   MouseClick("left", 585, 345, 1, 4 )
+   Sleep(500)
+   ; Close Button
+   ; X : 930
+   ; Y : 150
+   MouseClick("left", 930, 150, 1, 4 )
+
+   ; Restore previous mouse location
+   MouseMove( $LastRelativeMouseX, $LastRelativeMouseY, 4 )
+EndFunc
+
+Func HireLastAdventurerAvailable()
+   ; Hiring/Upgrading last Adventurer available
+   CustomLog( "Hiring/Upgrading last Adventurer available" )
+
+   ; Tab Adventurer
+   ; X : 58
+   ; Y : 158
+   Sleep(50)
+   MouseClick("left", 58, 158, 1, 4 )
+   Sleep(100)
+
+   ; Refresh Tab Adventurer scroll position to max bottom
+   $mouseWheelStep = 1
+   $mouseWheelPeriod = 10
+   For $indexOfScroll = 0 To 1 Step $mouseWheelStep
+	  MouseWheel( $MOUSE_WHEEL_UP, $mouseWheelStep )
+	  Sleep($mouseWheelPeriod)
+   Next
+   For $indexOfScroll = 0 To 30 Step $mouseWheelStep
+	  MouseWheel( $MOUSE_WHEEL_DOWN, $mouseWheelStep )
+	  Sleep($mouseWheelPeriod)
+   Next
+
+   Sleep(100)
+   ; Upgrade last adventurer
+   ; X : 500
+   ; Y : 500
+   ; Upgrade before last adventurer
+   ; X : 500
+   ; Y : 370
+   MouseClick("left", 500, 370, 1, 4)
+
+   ; Coordinates to button buy all upgrades when scroll down to max in adventurer tab
+   ; X : 460
+   ; Y : 560
+   MouseClick("left", 460, 560, 1, 4)
 
    ; Restore previous mouse location
    MouseMove( $LastRelativeMouseX, $LastRelativeMouseY, 4 )
