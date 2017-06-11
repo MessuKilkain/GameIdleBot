@@ -9,6 +9,9 @@ Local $activeLoopTimer = Null
 Local $loopTimeCounter = 0
 Local $UseLoopCounterInsteadOfRealTime = False
 
+Local $LastRelativeMouseX = 0
+Local $LastRelativeMouseY = 0
+
 Local $EnableAutomaticModeToggle = True
 Local $AutomaticModeTogglePeriod = 2.5*60*1000
 
@@ -95,12 +98,12 @@ Func RunCheckLoop()
 		 ;$MouseRelativePos[1] = $MouseRelativePos[1] - $WindowPos[1]
 		 ; Click X 845 [650 to 1130]
 		 ; Click Y 320 [150 to 500]
-		 $mouseX = $MouseRelativePos[0]
-		 $mouseY = $MouseRelativePos[1]
-;~ 		 CustomLog( "MouseRelativePos X=" & $mouseX & " Y=" & $mouseY )
-		 ;If $mouseX > 650 And $mouseX < 1130 And $mouseY > 150 And $mouseY < 500 Then
-		 If $mouseX > 700 And $mouseX < 1030 And $mouseY > 100 And $mouseY < 500 Then
-			MouseClick("left", $mouseX, $mouseY, $numberOfClicks, 1)
+		 $LastRelativeMouseX = $MouseRelativePos[0]
+		 $LastRelativeMouseY = $MouseRelativePos[1]
+;~ 		 CustomLog( "MouseRelativePos X=" & $LastRelativeMouseX & " Y=" & $LastRelativeMouseY )
+		 ;If $LastRelativeMouseX > 650 And $LastRelativeMouseX < 1130 And $LastRelativeMouseY > 150 And $LastRelativeMouseY < 500 Then
+		 If $LastRelativeMouseX > 700 And $LastRelativeMouseX < 1030 And $LastRelativeMouseY > 100 And $LastRelativeMouseY < 500 Then
+			MouseClick("left", $LastRelativeMouseX, $LastRelativeMouseY, $numberOfClicks, 1)
 			$shouldAutomationBeActive = True
 		 EndIf
 	  EndIf
@@ -153,7 +156,7 @@ Func RunCheckLoop()
 			MouseClick("left", 930, 150, 1, 4 )
 
 			; Restore previous mouse location
-			MouseMove( $mouseX, $mouseY, 4 )
+			MouseMove( $LastRelativeMouseX, $LastRelativeMouseY, 4 )
 
 		 EndIf
 
@@ -195,7 +198,7 @@ Func RunCheckLoop()
 			MouseClick("left", 460, 560, 1, 4)
 
 			; Restore previous mouse location
-			MouseMove( $mouseX, $mouseY, 4 )
+			MouseMove( $LastRelativeMouseX, $LastRelativeMouseY, 4 )
 		 EndIf
 
 	  EndIf
