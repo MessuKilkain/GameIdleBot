@@ -15,7 +15,7 @@ Local $LastRelativeMouseY = 0
 Local $EnableAutomaticModeToggle = True
 Local $AutomaticModeTogglePeriod = 2.5*60*1000
 
-Local $SkillSafeMargin = 1*01*01*0200
+Local $SkillSafeMargin = 1*01*01*0400
 Local $Skill_1_TriggerPeriod = 1*10*60*1000 + $SkillSafeMargin
 Local $Skill_2_TriggerPeriod = 1*10*60*1000 + $SkillSafeMargin
 Local $Skill_3_TriggerPeriod = 1*30*60*1000 + $SkillSafeMargin
