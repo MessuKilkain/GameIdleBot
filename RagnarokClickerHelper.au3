@@ -26,9 +26,11 @@ Local $Skill_7_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
 Local $Skill_8_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
 Local $Skill_9_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
 
+Local $EnableLastAdventurerHiring = True
 Local $LastAdventurerHiringPeriod = 1*01*60*1000
-;~ Local $EnableOldBlueBoxCheck = True
+Local $EnableOldBlueBoxCheck = True
 Local $OldBlueBoxCheckPeriod = 1*01*60*1000
+Local $EnableNewEquipementBoxCheck = True
 Local $NewEquipementBoxCheckPeriod = 1*10*60*1000
 
 ; Default
@@ -137,15 +139,15 @@ Func RunCheckLoop()
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_4_TriggerPeriod, "'", "Use skill 4" )
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_7_TriggerPeriod, 'è', "Use skill 7" )
 
-		 If $OldBlueBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $OldBlueBoxCheckPeriod ) <> Floor( $loopTimeCounter / $OldBlueBoxCheckPeriod ) ) ) Then
+		 If $EnableOldBlueBoxCheck And $OldBlueBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $OldBlueBoxCheckPeriod ) <> Floor( $loopTimeCounter / $OldBlueBoxCheckPeriod ) ) ) Then
 			CheckOldBlueBoxesLocations()
 		 EndIf
 
-		 If $NewEquipementBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $NewEquipementBoxCheckPeriod ) <> Floor( $loopTimeCounter / $NewEquipementBoxCheckPeriod ) ) ) Then
+		 If $EnableNewEquipementBoxCheck And $NewEquipementBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $NewEquipementBoxCheckPeriod ) <> Floor( $loopTimeCounter / $NewEquipementBoxCheckPeriod ) ) ) Then
 			CheckNewEquipementBox()
 		 EndIf
 
-		 If $LastAdventurerHiringPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $LastAdventurerHiringPeriod ) <> Floor( $loopTimeCounter / $LastAdventurerHiringPeriod ) ) ) Then
+		 If $EnableLastAdventurerHiring And $LastAdventurerHiringPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $LastAdventurerHiringPeriod ) <> Floor( $loopTimeCounter / $LastAdventurerHiringPeriod ) ) ) Then
 			HireLastAdventurerAvailable()
 		 EndIf
 
