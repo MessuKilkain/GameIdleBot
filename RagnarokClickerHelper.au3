@@ -240,4 +240,7 @@ Func CheckOldBlueBoxesLocations()
    ; #N
    ; X : ???
    ; Y : ???
+
+   ; Restore previous mouse location
+   MouseMove( $LastRelativeMouseX, $LastRelativeMouseY, 4 )
 EndFunc
