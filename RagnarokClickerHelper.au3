@@ -27,6 +27,7 @@ Local $Skill_8_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
 Local $Skill_9_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
 
 Local $LastAdventurerHiringPeriod = 1*01*60*1000
+;~ Local $EnableOldBlueBoxCheck = True
 Local $OldBlueBoxCheckPeriod = 1*01*60*1000
 Local $NewEquipementBoxCheckPeriod = 1*10*60*1000
 
@@ -161,6 +162,7 @@ Func RunCheckLoop()
 		 EndIf
 
 		 If $LastAdventurerHiringPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $LastAdventurerHiringPeriod ) <> Floor( $loopTimeCounter / $LastAdventurerHiringPeriod ) ) ) Then
+
 			; Hiring/Upgrading last Adventurer available
 			CustomLog( "Hiring/Upgrading last Adventurer available" )
 
