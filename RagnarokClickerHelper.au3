@@ -63,10 +63,6 @@ Func CustomLog( $logMessage )
    ConsoleWrite( TimeToLogginHumanReadableString(TimerDiff($timer)) & " " & $logMessage & @CRLF )
 EndFunc
 
-;~ HotKeySet("h", "StopLoop")
-HotKeySet("!v", "StopLoop") ; !v means ALT + "v"
-
-RunCheckLoop()
 
 Func SendKeyIfConditionIsMet( $previousLoopValue, $currentLoopValue, $period, $key, $logMessage )
    If $period > 0 And $previousLoopValue <> $currentLoopValue And ( $previousLoopValue == 0 Or ( Floor( $previousLoopValue / $period ) <> Floor( $currentLoopValue / $period ) ) ) Then
