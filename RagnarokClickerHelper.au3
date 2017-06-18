@@ -1,6 +1,6 @@
 
-#include <GUIConstantsEx.au3>
-#include <MsgBoxConstants.au3>
+#include-once
+
 #include <AutoItConstants.au3>
 
 Local $continueLoop = True
