@@ -3,7 +3,7 @@
 #include <MsgBoxConstants.au3>
 #include <AutoItConstants.au3>
 
-Local $continueLoop = true
+Local $continueLoop = True
 Local $timer = TimerInit()
 Local $activeLoopTimer = Null
 Local $loopTimeCounter = 0
