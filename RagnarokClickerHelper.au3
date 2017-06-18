@@ -4,6 +4,7 @@
 #include <AutoItConstants.au3>
 
 Local $continueLoop = True
+Local $enableLoopCheck = True
 Local $timer = TimerInit()
 Local $activeLoopTimer = Null
 Local $loopTimeCounter = 0
@@ -92,7 +93,7 @@ Func RunCheckLoop()
    ; Just idle around
    While $continueLoop
 	  $shouldAutomationBeActive = False
-	  If WinActive($ragnarokClickerWindowName) Then
+	  If $enableLoopCheck And WinActive($ragnarokClickerWindowName) Then
 ;~ 		 CustomLog( "Windows is active" )
 		 ;$WindowPos = WinGetPos($ragnarokClickerWindowName)
 		 $MousePos = MouseGetPos()
