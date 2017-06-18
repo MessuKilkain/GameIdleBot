@@ -3,6 +3,7 @@
 
 #include <AutoItConstants.au3>
 
+Local $ragnarokClickerWindowName = "Ragnarok Clicker"
 Local $continueLoop = True
 Local $enableLoopCheck = True
 Local $timer = TimerInit()
@@ -63,7 +64,6 @@ Func CustomLog( $logMessage )
    ConsoleWrite( TimeToLogginHumanReadableString(TimerDiff($timer)) & " " & $logMessage & @CRLF )
 EndFunc
 
-
 Func SendKeyIfConditionIsMet( $previousLoopValue, $currentLoopValue, $period, $key, $logMessage )
    If $period > 0 And $previousLoopValue <> $currentLoopValue And ( $previousLoopValue == 0 Or ( Floor( $previousLoopValue / $period ) <> Floor( $currentLoopValue / $period ) ) ) Then
 	  CustomLog( $logMessage )
@@ -71,84 +71,85 @@ Func SendKeyIfConditionIsMet( $previousLoopValue, $currentLoopValue, $period, $k
    EndIf
 EndFunc
 
-Func RunCheckLoop()
-
-   $ragnarokClickerWindowName = "Ragnarok Clicker"
-
-   $pos = WinGetPos($ragnarokClickerWindowName)
-   $x = 300
-   $y = 30
-
+Func CheckLoopInit()
    ; 0 = relative coords to the active window
    ; 1 = (default) absolute screen coordinates
    ; 2 = relative coords to the client area of the active window
    Opt("MouseCoordMode",0)
+EndFunc
 
-   ;WinWaitActive($ragnarokClickerWindowName)
+Func CheckLoopStep()
+   $shouldAutomationBeActive = False
+   If $enableLoopCheck And WinActive($ragnarokClickerWindowName) Then
+;~ 	  CustomLog( "Windows is active" )
+	  ;$WindowPos = WinGetPos($ragnarokClickerWindowName)
+	  $MousePos = MouseGetPos()
+	  $MouseRelativePos = $MousePos
+	  ;$MouseRelativePos[0] = $MouseRelativePos[0] - $WindowPos[0]
+	  ;$MouseRelativePos[1] = $MouseRelativePos[1] - $WindowPos[1]
+	  ; Click X 845 [650 to 1130]
+	  ; Click Y 320 [150 to 500]
+	  $LastRelativeMouseX = $MouseRelativePos[0]
+	  $LastRelativeMouseY = $MouseRelativePos[1]
+;~ 	  CustomLog( "MouseRelativePos X=" & $LastRelativeMouseX & " Y=" & $LastRelativeMouseY )
+	  ;If $LastRelativeMouseX > 650 And $LastRelativeMouseX < 1130 And $LastRelativeMouseY > 150 And $LastRelativeMouseY < 500 Then
+	  If $LastRelativeMouseX > 700 And $LastRelativeMouseX < 1030 And $LastRelativeMouseY > 100 And $LastRelativeMouseY < 500 Then
+		 MouseClick("left", $LastRelativeMouseX, $LastRelativeMouseY, $numberOfClicks, 1)
+		 $shouldAutomationBeActive = True
+	  EndIf
+   EndIf
+
+   If Not $shouldAutomationBeActive Then
+	  $lastLoopTimeCounter = 0
+	  $loopTimeCounter = 0
+	  $activeLoopTimer = Null
+   Else
+	  If $activeLoopTimer == Null Then
+		 $activeLoopTimer = TimerInit()
+	  EndIf
+	  $lastLoopTimeCounter = $loopTimeCounter
+	  If $UseLoopCounterInsteadOfRealTime Then
+		 $loopTimeCounter += $loopSleep
+	  Else
+		 $loopTimeCounter = TimerDiff($activeLoopTimer)
+	  EndIf
+
+	  If $EnableAutomaticModeToggle Then
+		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $AutomaticModeTogglePeriod, "a", "Toggle Automatic Mode" )
+	  EndIf
+	  SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_6_TriggerPeriod, '-', "Use skill 6" )
+	  SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_8_TriggerPeriod, '_', "Use skill 8" )
+	  SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_5_TriggerPeriod, '(', "Use skill 5" )
+	  SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_9_TriggerPeriod, 'ç', "Use skill 9" )
+	  SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_1_TriggerPeriod, "&", "Use skill 1" )
+	  SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_2_TriggerPeriod, "é", "Use skill 2" )
+	  SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_3_TriggerPeriod, '"', "Use skill 3" )
+	  SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_4_TriggerPeriod, "'", "Use skill 4" )
+	  SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_7_TriggerPeriod, 'è', "Use skill 7" )
+
+	  If $EnableOldBlueBoxCheck And $OldBlueBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $OldBlueBoxCheckPeriod ) <> Floor( $loopTimeCounter / $OldBlueBoxCheckPeriod ) ) ) Then
+		 CheckOldBlueBoxesLocations()
+	  EndIf
+
+	  If $EnableNewEquipementBoxCheck And $NewEquipementBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $NewEquipementBoxCheckPeriod ) <> Floor( $loopTimeCounter / $NewEquipementBoxCheckPeriod ) ) ) Then
+		 CheckNewEquipementBox()
+	  EndIf
+
+	  If $EnableLastAdventurerHiring And $LastAdventurerHiringPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $LastAdventurerHiringPeriod ) <> Floor( $loopTimeCounter / $LastAdventurerHiringPeriod ) ) ) Then
+		 HireLastAdventurerAvailable()
+	  EndIf
+
+   EndIf
+EndFunc
+
+Func RunCheckLoop()
+
+   CheckLoopInit()
 
    ; Just idle around
    While $continueLoop
-	  $shouldAutomationBeActive = False
-	  If $enableLoopCheck And WinActive($ragnarokClickerWindowName) Then
-;~ 		 CustomLog( "Windows is active" )
-		 ;$WindowPos = WinGetPos($ragnarokClickerWindowName)
-		 $MousePos = MouseGetPos()
-		 $MouseRelativePos = $MousePos
-		 ;$MouseRelativePos[0] = $MouseRelativePos[0] - $WindowPos[0]
-		 ;$MouseRelativePos[1] = $MouseRelativePos[1] - $WindowPos[1]
-		 ; Click X 845 [650 to 1130]
-		 ; Click Y 320 [150 to 500]
-		 $LastRelativeMouseX = $MouseRelativePos[0]
-		 $LastRelativeMouseY = $MouseRelativePos[1]
-;~ 		 CustomLog( "MouseRelativePos X=" & $LastRelativeMouseX & " Y=" & $LastRelativeMouseY )
-		 ;If $LastRelativeMouseX > 650 And $LastRelativeMouseX < 1130 And $LastRelativeMouseY > 150 And $LastRelativeMouseY < 500 Then
-		 If $LastRelativeMouseX > 700 And $LastRelativeMouseX < 1030 And $LastRelativeMouseY > 100 And $LastRelativeMouseY < 500 Then
-			MouseClick("left", $LastRelativeMouseX, $LastRelativeMouseY, $numberOfClicks, 1)
-			$shouldAutomationBeActive = True
-		 EndIf
-	  EndIf
 
-	  If Not $shouldAutomationBeActive Then
-		 $lastLoopTimeCounter = 0
-		 $loopTimeCounter = 0
-		 $activeLoopTimer = Null
-	  Else
-		 If $activeLoopTimer == Null Then
-			$activeLoopTimer = TimerInit()
-		 EndIf
-		 $lastLoopTimeCounter = $loopTimeCounter
-		 If $UseLoopCounterInsteadOfRealTime Then
-			$loopTimeCounter += $loopSleep
-		 Else
-			$loopTimeCounter = TimerDiff($activeLoopTimer)
-		 EndIf
-
-		 If $EnableAutomaticModeToggle Then
-			SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $AutomaticModeTogglePeriod, "a", "Toggle Automatic Mode" )
-		 EndIf
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_6_TriggerPeriod, '-', "Use skill 6" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_8_TriggerPeriod, '_', "Use skill 8" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_5_TriggerPeriod, '(', "Use skill 5" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_9_TriggerPeriod, 'ç', "Use skill 9" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_1_TriggerPeriod, "&", "Use skill 1" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_2_TriggerPeriod, "é", "Use skill 2" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_3_TriggerPeriod, '"', "Use skill 3" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_4_TriggerPeriod, "'", "Use skill 4" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_7_TriggerPeriod, 'è', "Use skill 7" )
-
-		 If $EnableOldBlueBoxCheck And $OldBlueBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $OldBlueBoxCheckPeriod ) <> Floor( $loopTimeCounter / $OldBlueBoxCheckPeriod ) ) ) Then
-			CheckOldBlueBoxesLocations()
-		 EndIf
-
-		 If $EnableNewEquipementBoxCheck And $NewEquipementBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $NewEquipementBoxCheckPeriod ) <> Floor( $loopTimeCounter / $NewEquipementBoxCheckPeriod ) ) ) Then
-			CheckNewEquipementBox()
-		 EndIf
-
-		 If $EnableLastAdventurerHiring And $LastAdventurerHiringPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $LastAdventurerHiringPeriod ) <> Floor( $loopTimeCounter / $LastAdventurerHiringPeriod ) ) ) Then
-			HireLastAdventurerAvailable()
-		 EndIf
-
-	  EndIf
+	  CheckLoopStep()
 
 	  ;CustomLog( TimerDiff($timer) & " Before Sleep" & @CRLF )
 	  Sleep($loopSleep)
