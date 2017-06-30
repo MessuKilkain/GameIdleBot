@@ -9,10 +9,7 @@ RagnarokClickerHelperGUI()
 Func RagnarokClickerHelperGUI()
 
 ;~    RunCheckLoop()
-   Local $hGUI = GUICreate("RagnarokClickerHelper", 265, 150, -1, -1)
-
-;~    Local $EnableAutomaticModeToggle = False
-;~    Local $AutomaticModeTogglePeriod = 2.5*60*1000
+	Local $hGUI = GUICreate("RagnarokClickerHelper", 220, 150, -1, -1)
 
 ;~    Local $SkillSafeMargin = 1*01*01*0400
 ;~    Local $Skill_1_TriggerPeriod = 1*10*60*1000 + $SkillSafeMargin
@@ -32,27 +29,49 @@ Func RagnarokClickerHelperGUI()
 ;~    Local $EnableNewEquipementBoxCheck = True
 ;~    Local $NewEquipementBoxCheckPeriod = 1*10*60*1000
 
-   $CheckBox_EnableLoopCheck = GUICtrlCreateCheckbox("Main Loop Check", 50, 50, 80, 20)
-   GUICtrlSetState(-1, ($enableLoopCheck?$GUI_CHECKED:$GUI_UNCHECKED))
-   $CheckBox_EnableAutomaticModeToggle = GUICtrlCreateCheckbox("Automatic Mode Toggle", 50, 100, 80, 20)
-   GUICtrlSetState(-1, ($EnableAutomaticModeToggle?$GUI_CHECKED:$GUI_UNCHECKED))
-
-
+	$UIValues_Padding_Left = 20
+	$UIValues_Line_Height = 20
+	$UIValues_CheckBox_Width = 180
+	$UIValues_CurrentTopValue = 20
+	;~ Line 1
+	$CheckBox_EnableLoopCheck = GUICtrlCreateCheckbox("Main Loop Check", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
+	GUICtrlSetState(-1, ($enableLoopCheck?$GUI_CHECKED:$GUI_UNCHECKED))
+	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
+	;~ Line 2
+	$CheckBox_EnableAutomaticModeToggle = GUICtrlCreateCheckbox("Automatic Mode Toggle", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
+	GUICtrlSetState(-1, ($EnableAutomaticModeToggle?$GUI_CHECKED:$GUI_UNCHECKED))
+	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
+	;~ Line 3
+	$CheckBox_EnableLastAdventurerHiring = GUICtrlCreateCheckbox("Last Adventurer Hiring/Upgrade", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
+	GUICtrlSetState(-1, ($EnableLastAdventurerHiring?$GUI_CHECKED:$GUI_UNCHECKED))
+	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
+	;~ Line 4
+	$CheckBox_EnableOldBlueBoxCheck = GUICtrlCreateCheckbox("Old Blue Box Check", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
+	GUICtrlSetState(-1, ($EnableOldBlueBoxCheck?$GUI_CHECKED:$GUI_UNCHECKED))
+	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
+	;~ Line 5
+	$CheckBox_EnableNewEquipementBoxCheck = GUICtrlCreateCheckbox("New equipement Check", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
+	GUICtrlSetState(-1, ($EnableNewEquipementBoxCheck?$GUI_CHECKED:$GUI_UNCHECKED))
+	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
+	
 
 	GUISetState(@SW_SHOW, $hGUI)
 
 	CustomLog("$enableLoopCheck : "&$enableLoopCheck)
-   CheckLoopInit()
+	CheckLoopInit()
 	; Run the GUI until the dialog is closed
 	While 1
-	   $enableLoopCheck = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableLoopCheck ) ? True : False )
-	   $CheckBox_EnableAutomaticModeToggle = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableAutomaticModeToggle ) ? True : False )
+		$enableLoopCheck = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableLoopCheck ) ? True : False )
+		$EnableAutomaticModeToggle = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableAutomaticModeToggle ) ? True : False )
+		$EnableLastAdventurerHiring = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableLastAdventurerHiring ) ? True : False )
+		$EnableOldBlueBoxCheck = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableOldBlueBoxCheck ) ? True : False )
+		$EnableNewEquipementBoxCheck = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableNewEquipementBoxCheck ) ? True : False )
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
 			 EndSwitch
 			 CheckLoopStep()
-	  Sleep($loopSleep)
+		Sleep($loopSleep)
 	WEnd
 	GUIDelete($hGUI)
 	Exit
