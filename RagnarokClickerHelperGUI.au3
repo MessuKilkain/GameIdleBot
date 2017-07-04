@@ -33,27 +33,27 @@ Func RagnarokClickerHelperGUI()
 	$UIValues_Line_Height = 20
 	$UIValues_CheckBox_Width = 180
 	$UIValues_CurrentTopValue = 20
-	;~ Line 1
+	;~ Line - Main Loop Check
 	$CheckBox_EnableLoopCheck = GUICtrlCreateCheckbox("Main Loop Check", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
 	GUICtrlSetState(-1, ($enableLoopCheck?$GUI_CHECKED:$GUI_UNCHECKED))
 	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
-	;~ Line 2
+	;~ Line - Automatic Mode Toggle
 	$CheckBox_EnableAutomaticModeToggle = GUICtrlCreateCheckbox("Automatic Mode Toggle", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
 	GUICtrlSetState(-1, ($EnableAutomaticModeToggle?$GUI_CHECKED:$GUI_UNCHECKED))
 	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
-	;~ Line 3
+	;~ Line - Last Adventurer Hiring/Upgrade
 	$CheckBox_EnableLastAdventurerHiring = GUICtrlCreateCheckbox("Last Adventurer Hiring/Upgrade", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
 	GUICtrlSetState(-1, ($EnableLastAdventurerHiring?$GUI_CHECKED:$GUI_UNCHECKED))
 	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
-	;~ Line 4
+	;~ Line - Old Blue Box Check
 	$CheckBox_EnableOldBlueBoxCheck = GUICtrlCreateCheckbox("Old Blue Box Check", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
 	GUICtrlSetState(-1, ($EnableOldBlueBoxCheck?$GUI_CHECKED:$GUI_UNCHECKED))
 	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
-	;~ Line 5
+	;~ Line - New equipement Check
 	$CheckBox_EnableNewEquipementBoxCheck = GUICtrlCreateCheckbox("New equipement Check", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
 	GUICtrlSetState(-1, ($EnableNewEquipementBoxCheck?$GUI_CHECKED:$GUI_UNCHECKED))
 	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
-	
+
 
 	GUISetState(@SW_SHOW, $hGUI)
 
