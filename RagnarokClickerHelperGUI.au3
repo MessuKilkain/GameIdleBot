@@ -9,7 +9,7 @@ RagnarokClickerHelperGUI()
 Func RagnarokClickerHelperGUI()
 
 ;~    RunCheckLoop()
-	Local $hGUI = GUICreate("RagnarokClickerHelper", 220, 150, -1, -1)
+	Local $hGUI = GUICreate("RagnarokClickerHelper", 220, 170, -1, -1)
 
 ;~    Local $SkillSafeMargin = 1*01*01*0400
 ;~    Local $Skill_1_TriggerPeriod = 1*10*60*1000 + $SkillSafeMargin
@@ -41,6 +41,10 @@ Func RagnarokClickerHelperGUI()
 	$CheckBox_EnableAutomaticModeToggle = GUICtrlCreateCheckbox("Automatic Mode Toggle", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
 	GUICtrlSetState(-1, ($EnableAutomaticModeToggle?$GUI_CHECKED:$GUI_UNCHECKED))
 	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
+	;~ Line - Automatic Skills Activation
+	$CheckBox_EnableAutomaticPeriodicSkillsActivation = GUICtrlCreateCheckbox("Automatic Skills Activation", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
+	GUICtrlSetState(-1, ($EnableAutomaticPeriodicSkillsActivation?$GUI_CHECKED:$GUI_UNCHECKED))
+	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
 	;~ Line - Last Adventurer Hiring/Upgrade
 	$CheckBox_EnableLastAdventurerHiring = GUICtrlCreateCheckbox("Last Adventurer Hiring/Upgrade", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
 	GUICtrlSetState(-1, ($EnableLastAdventurerHiring?$GUI_CHECKED:$GUI_UNCHECKED))
@@ -63,6 +67,7 @@ Func RagnarokClickerHelperGUI()
 	While 1
 		$enableLoopCheck = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableLoopCheck ) ? True : False )
 		$EnableAutomaticModeToggle = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableAutomaticModeToggle ) ? True : False )
+		$EnableAutomaticPeriodicSkillsActivation = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableAutomaticPeriodicSkillsActivation ) ? True : False )
 		$EnableLastAdventurerHiring = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableLastAdventurerHiring ) ? True : False )
 		$EnableOldBlueBoxCheck = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableOldBlueBoxCheck ) ? True : False )
 		$EnableNewEquipementBoxCheck = ($GUI_CHECKED == GUICtrlRead($CheckBox_EnableNewEquipementBoxCheck ) ? True : False )
