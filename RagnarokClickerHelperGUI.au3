@@ -8,7 +8,7 @@ RagnarokClickerHelperGUI()
 
 Func RagnarokClickerHelperGUI()
 
-;~    RunCheckLoop()
+;~	RunCheckLoop()
 	Local $hGUI = GUICreate("RagnarokClickerHelper", 220, 170, -1, -1)
 
 ;~    Local $SkillSafeMargin = 1*01*01*0400
@@ -80,4 +80,4 @@ Func RagnarokClickerHelperGUI()
 	WEnd
 	GUIDelete($hGUI)
 	Exit
-EndFunc
+EndFunc	;==>RagnarokClickerHelperGUI
