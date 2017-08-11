@@ -6,6 +6,14 @@
 
 RagnarokClickerHelperGUI()
 
+Func _GetExpectedGlobalCheckValue($globalCheckValue,$booleanVariableToTest)
+	$expectedValueForBoolean = ($booleanVariableToTest?$GUI_CHECKED:$GUI_UNCHECKED)
+	If $globalCheckValue <> 0 And $globalCheckValue <> $expectedValueForBoolean Then
+		return $GUI_INDETERMINATE
+	EndIf
+	return $expectedValueForBoolean
+EndFunc	;==>_GetExpectedGlobalCheckValue
+
 Func RagnarokClickerHelperGUI()
 
 ;~	RunCheckLoop()
