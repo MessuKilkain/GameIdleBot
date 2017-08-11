@@ -130,8 +130,9 @@ Func RagnarokClickerHelperGUI()
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
-			 EndSwitch
-			 CheckLoopStep()
+		EndSwitch
+		CheckLoopStep()
+		
 		Sleep($loopSleep)
 	WEnd
 	GUIDelete($hGUI)
