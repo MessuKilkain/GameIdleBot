@@ -37,6 +37,7 @@ Func RagnarokClickerHelperGUI()
 ;~    Local $EnableNewEquipementBoxCheck = True
 ;~    Local $NewEquipementBoxCheckPeriod = 1*10*60*1000
 
+	
 	$UIValues_Padding_Left = 20
 	$UIValues_Line_Height = 20
 	$UIValues_CheckBox_Width = 180
@@ -70,6 +71,9 @@ Func RagnarokClickerHelperGUI()
 	$CheckBox_EnableNewEquipementBoxCheck = GUICtrlCreateCheckbox("New equipement Check", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
 	GUICtrlSetState(-1, ($EnableNewEquipementBoxCheck?$GUI_CHECKED:$GUI_UNCHECKED))
 	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
+	;~ Line - Debug Label
+	; $Label_Debug = GUICtrlCreateLabel ("", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
+	; $UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
 
 
 	GUISetState(@SW_SHOW, $hGUI)
