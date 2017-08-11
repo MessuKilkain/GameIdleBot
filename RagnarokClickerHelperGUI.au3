@@ -81,3 +81,8 @@ Func RagnarokClickerHelperGUI()
 	GUIDelete($hGUI)
 	Exit
 EndFunc	;==>RagnarokClickerHelperGUI
+
+Func _IsChecked($idControlID)
+	Return BitAND(GUICtrlRead($idControlID), $GUI_CHECKED) = $GUI_CHECKED
+EndFunc	;==>_IsChecked
+
