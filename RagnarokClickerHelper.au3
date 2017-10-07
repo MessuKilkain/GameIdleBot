@@ -19,15 +19,16 @@ Local $AutomaticModeTogglePeriod = 2.5*60*1000
 
 Local $EnableAutomaticPeriodicSkillsActivation = True
 Local $SkillSafeMargin = 1*01*01*0400
-Local $Skill_1_TriggerPeriod = 1*10*60*1000 + $SkillSafeMargin
-Local $Skill_2_TriggerPeriod = 1*10*60*1000 + $SkillSafeMargin
-Local $Skill_3_TriggerPeriod = 1*30*60*1000 + $SkillSafeMargin
-Local $Skill_4_TriggerPeriod = 1*30*60*1000 + $SkillSafeMargin
-Local $Skill_5_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
-Local $Skill_6_TriggerPeriod = 8*60*60*1000 + $SkillSafeMargin
-Local $Skill_7_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
-Local $Skill_8_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
-Local $Skill_9_TriggerPeriod = 1*60*60*1000 + $SkillSafeMargin
+Local $Skill_TriggerPeriod[9]
+$Skill_TriggerPeriod[0] = 1*10*60*1000 + $SkillSafeMargin
+$Skill_TriggerPeriod[1] = 1*10*60*1000 + $SkillSafeMargin
+$Skill_TriggerPeriod[2] = 1*30*60*1000 + $SkillSafeMargin
+$Skill_TriggerPeriod[3] = 1*30*60*1000 + $SkillSafeMargin
+$Skill_TriggerPeriod[4] = 1*60*60*1000 + $SkillSafeMargin
+$Skill_TriggerPeriod[5] = 8*60*60*1000 + $SkillSafeMargin
+$Skill_TriggerPeriod[6] = 1*60*60*1000 + $SkillSafeMargin
+$Skill_TriggerPeriod[7] = 1*60*60*1000 + $SkillSafeMargin
+$Skill_TriggerPeriod[8] = 1*60*60*1000 + $SkillSafeMargin
 
 Local $EnableLastAdventurerHiring = True
 Local $LastAdventurerHiringPeriod = 1*01*60*1000
@@ -119,15 +120,15 @@ Func CheckLoopStep()
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $AutomaticModeTogglePeriod, "a", "Toggle Automatic Mode" )
 	  EndIf
 	  If $EnableAutomaticPeriodicSkillsActivation Then
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_6_TriggerPeriod, '-', "Use skill 6" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_8_TriggerPeriod, '_', "Use skill 8" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_5_TriggerPeriod, '(', "Use skill 5" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_1_TriggerPeriod, "&", "Use skill 1" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_2_TriggerPeriod, "é", "Use skill 2" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_3_TriggerPeriod, '"', "Use skill 3" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_9_TriggerPeriod, 'ç', "Use skill 9" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_4_TriggerPeriod, "'", "Use skill 4" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_7_TriggerPeriod, 'è', "Use skill 7" )
+		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[5], '-', "Use skill 5" )
+		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[7], '_', "Use skill 7" )
+		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[4], '(', "Use skill 4" )
+		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[0], "&", "Use skill 0" )
+		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[1], "é", "Use skill 1" )
+		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[2], '"', "Use skill 2" )
+		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[8], 'ç', "Use skill 8" )
+		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[3], "'", "Use skill 3" )
+		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[6], 'è', "Use skill 6" )
 	  EndIf
 
 	  If $EnableOldBlueBoxCheck And $OldBlueBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $OldBlueBoxCheckPeriod ) <> Floor( $loopTimeCounter / $OldBlueBoxCheckPeriod ) ) ) Then
