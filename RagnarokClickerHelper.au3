@@ -7,6 +7,7 @@ Local $ragnarokClickerWindowName = "Ragnarok Clicker"
 Local $continueLoop = True
 Local $enableLoopCheck = True
 Local $timer = TimerInit()
+Local $checkLoopTimer = Null
 Local $activeLoopTimer = Null
 Local $loopTimeCounter = 0
 Local $UseLoopCounterInsteadOfRealTime = False
@@ -39,6 +40,16 @@ $Skill_TriggerPeriod[5] = 8*60*60*1000 + $SkillSafeMargin
 $Skill_TriggerPeriod[6] = 1*60*60*1000 + $SkillSafeMargin
 $Skill_TriggerPeriod[7] = 1*60*60*1000 + $SkillSafeMargin
 $Skill_TriggerPeriod[8] = 1*60*60*1000 + $SkillSafeMargin
+Local $Skill_LastTriggerTime[9]
+$Skill_LastTriggerTime[0] = Null
+$Skill_LastTriggerTime[1] = Null
+$Skill_LastTriggerTime[2] = Null
+$Skill_LastTriggerTime[3] = Null
+$Skill_LastTriggerTime[4] = Null
+$Skill_LastTriggerTime[5] = Null
+$Skill_LastTriggerTime[6] = Null
+$Skill_LastTriggerTime[7] = Null
+$Skill_LastTriggerTime[8] = Null
 
 Local $EnableLastAdventurerHiring = True
 Local $LastAdventurerHiringPeriod = 1*01*60*1000
@@ -83,11 +94,29 @@ Func SendKeyIfConditionIsMet( $previousLoopValue, $currentLoopValue, $period, $k
    EndIf
 EndFunc
 
+Func TriggerIfPossibleSkillWithIndex($skillIndex)
+	If $Skill_TriggerPeriod[$skillIndex] > 0 And ( $Skill_LastTriggerTime[$skillIndex] == Null Or TimerDiff($checkLoopTimer) - $Skill_LastTriggerTime[$skillIndex] > $Skill_TriggerPeriod[$skillIndex] ) Then
+		CustomLog( "Automatically trigger skill " & $skillIndex )
+		Send($Skill_Key[$skillIndex])
+		SkillUsedWithIndex($skillIndex)
+	EndIf
+EndFunc
+
+Func SkillUsedWithIndex($skillIndex)
+	If WinActive($ragnarokClickerWindowName) Then
+		CustomLog("Skill " & $skillIndex & " triggered.")
+		If Null <> $checkLoopTimer Then
+			$Skill_LastTriggerTime[$skillIndex] = TimerDiff($checkLoopTimer)
+		EndIf
+	EndIf
+EndFunc
+
 Func CheckLoopInit()
    ; 0 = relative coords to the active window
    ; 1 = (default) absolute screen coordinates
    ; 2 = relative coords to the client area of the active window
    Opt("MouseCoordMode",0)
+   $checkLoopTimer = TimerInit()
 EndFunc
 
 Func CheckLoopStep()
@@ -130,15 +159,15 @@ Func CheckLoopStep()
 		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $AutomaticModeTogglePeriod, "a", "Toggle Automatic Mode" )
 	  EndIf
 	  If $EnableAutomaticPeriodicSkillsActivation Then
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[5], $Skill_Key[5], "Use skill 5" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[7], $Skill_Key[7], "Use skill 7" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[4], $Skill_Key[4], "Use skill 4" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[0], $Skill_Key[0], "Use skill 0" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[1], $Skill_Key[1], "Use skill 1" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[2], $Skill_Key[2], "Use skill 2" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[8], $Skill_Key[8], "Use skill 8" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[3], $Skill_Key[3], "Use skill 3" )
-		 SendKeyIfConditionIsMet( $lastLoopTimeCounter, $loopTimeCounter, $Skill_TriggerPeriod[6], $Skill_Key[6], "Use skill 6" )
+		 TriggerIfPossibleSkillWithIndex(5)
+		 TriggerIfPossibleSkillWithIndex(7)
+		 TriggerIfPossibleSkillWithIndex(4)
+		 TriggerIfPossibleSkillWithIndex(0)
+		 TriggerIfPossibleSkillWithIndex(1)
+		 TriggerIfPossibleSkillWithIndex(2)
+		 TriggerIfPossibleSkillWithIndex(8)
+		 TriggerIfPossibleSkillWithIndex(3)
+		 TriggerIfPossibleSkillWithIndex(6)
 	  EndIf
 
 	  If $EnableOldBlueBoxCheck And $OldBlueBoxCheckPeriod > 0 And $lastLoopTimeCounter <> $loopTimeCounter And ( ( Floor( $lastLoopTimeCounter / $OldBlueBoxCheckPeriod ) <> Floor( $loopTimeCounter / $OldBlueBoxCheckPeriod ) ) ) Then
