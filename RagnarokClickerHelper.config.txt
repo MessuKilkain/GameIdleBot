@@ -1,0 +1,10 @@
+//$AutomaticModeTogglePeriod:
+$Skill_TriggerPeriod[0]:368400
+$Skill_TriggerPeriod[1]:368400
+$Skill_TriggerPeriod[2]:1101400
+$Skill_TriggerPeriod[3]:1101400
+$Skill_TriggerPeriod[4]:2203400
+$Skill_TriggerPeriod[5]:867230400
+$Skill_TriggerPeriod[6]:2203400
+$Skill_TriggerPeriod[7]:2203400
+$Skill_TriggerPeriod[8]:2203400
