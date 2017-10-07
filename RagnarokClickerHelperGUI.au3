@@ -74,7 +74,9 @@ Func RagnarokClickerHelperGUI()
 	;~ Line - Debug Label
 	; $Label_Debug = GUICtrlCreateLabel ("", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
 	; $UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
-
+	;~ Line - LoadConfig_Button
+	Local $LoadConfig_Button = GUICtrlCreateButton ("Load config", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
+	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
 
 	GUISetState(@SW_SHOW, $hGUI)
 
@@ -134,7 +136,10 @@ Func RagnarokClickerHelperGUI()
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				ExitLoop
+			Case $LoadConfig_Button
+				LoadRagnarokClickerHelperConfig("RagnarokClickerHelper.config.txt")
 		EndSwitch
+		; GUICtrlSetData($Label_Debug,"$Skill_TriggerPeriod[0] " & $Skill_TriggerPeriod[0])
 		CheckLoopStep()
 		
 		Sleep($loopSleep)
@@ -147,3 +152,39 @@ Func _IsChecked($idControlID)
 	Return BitAND(GUICtrlRead($idControlID), $GUI_CHECKED) = $GUI_CHECKED
 EndFunc	;==>_IsChecked
 
+Func LoadRagnarokClickerHelperConfig($pathToFile)
+	$i = 0
+	$file = FileOpen($pathToFile,0)
+	; ConsoleWrite("Start parsing")
+	While 1
+		$i = $i + 1
+		Local $line = FileReadLine($file)
+		If @error = -1 Then ExitLoop
+		$row_array = StringSplit($line,':')
+		$key = $row_array[1]
+		$value = $row_array[2]
+		; ConsoleWrite($key & " : " & $value & @CRLF)
+		Switch $key
+			Case '$Skill_TriggerPeriod[0]'
+				$Skill_TriggerPeriod[0] = Int($value)
+			Case '$Skill_TriggerPeriod[1]'
+				$Skill_TriggerPeriod[1] = Int($value)
+			Case '$Skill_TriggerPeriod[2]'
+				$Skill_TriggerPeriod[2] = Int($value)
+			Case '$Skill_TriggerPeriod[3]'
+				$Skill_TriggerPeriod[3] = Int($value)
+			Case '$Skill_TriggerPeriod[4]'
+				$Skill_TriggerPeriod[4] = Int($value)
+			Case '$Skill_TriggerPeriod[5]'
+				$Skill_TriggerPeriod[5] = Int($value)
+			Case '$Skill_TriggerPeriod[6]'
+				$Skill_TriggerPeriod[6] = Int($value)
+			Case '$Skill_TriggerPeriod[7]'
+				$Skill_TriggerPeriod[7] = Int($value)
+			Case '$Skill_TriggerPeriod[8]'
+				$Skill_TriggerPeriod[8] = Int($value)
+			Case '$AutomaticModeTogglePeriod'
+				$AutomaticModeTogglePeriod = Int($value)
+		EndSwitch
+	WEnd
+EndFunc
