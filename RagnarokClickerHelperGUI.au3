@@ -17,7 +17,7 @@ EndFunc	;==>_GetExpectedGlobalCheckValue
 Func RagnarokClickerHelperGUI()
 
 ;~	RunCheckLoop()
-	Local $hGUI = GUICreate("RagnarokClickerHelper", 220, 200, -1, -1)
+	Local $hGUI = GUICreate("RagnarokClickerHelper", 300, 500, -1, -1)
 
 ;~    Local $SkillSafeMargin = 1*01*01*0400
 ;~    Local $Skill_1_TriggerPeriod = 1*10*60*1000 + $SkillSafeMargin
@@ -59,6 +59,14 @@ Func RagnarokClickerHelperGUI()
 	$CheckBox_EnableAutomaticPeriodicSkillsActivation = GUICtrlCreateCheckbox("Automatic Skills Activation", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
 	GUICtrlSetState(-1, ($EnableAutomaticPeriodicSkillsActivation?$GUI_CHECKED:$GUI_UNCHECKED))
 	$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
+	;~ Line - Automatic Skills Activation - Skills countdown
+	Local $skillCountDownText[$numberOfSkills]
+	Local $Label_Skill[$numberOfSkills]
+	For $skillIndex = 0 To $numberOfSkills - 1 Step 1
+		$skillCountDownText[$skillIndex] = StringFormat("Skill %d in %s", $skillIndex+1, "%s")
+		$Label_Skill[$skillIndex] = GUICtrlCreateLabel("", 2 * $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
+		$UIValues_CurrentTopValue = $UIValues_CurrentTopValue + $UIValues_Line_Height
+	Next
 	;~ Line - Last Adventurer Hiring/Upgrade
 	$CheckBox_EnableLastAdventurerHiring = GUICtrlCreateCheckbox("Last Adventurer Hiring/Upgrade", $UIValues_Padding_Left, $UIValues_CurrentTopValue, $UIValues_CheckBox_Width, $UIValues_Line_Height)
 	GUICtrlSetState(-1, ($EnableLastAdventurerHiring?$GUI_CHECKED:$GUI_UNCHECKED))
@@ -84,6 +92,10 @@ Func RagnarokClickerHelperGUI()
 	CheckLoopInit()
 	; Run the GUI until the dialog is closed
 	While 1
+		; Labels update
+		For $skillIndex = 0 To $numberOfSkills - 1 Step 1
+			GUICtrlSetData($Label_Skill[$skillIndex], StringFormat($skillCountDownText[$skillIndex], SkillTimeToHumanReadableString(TimeBeforeActivationOfSkillWithIndex($skillIndex))))
+		Next
 		; 0 means no value is yet attributed
 		; Other valid values are $GUI_CHECKED (1), $GUI_INDETERMINATE (2) and $GUI_UNCHECKED (4)
 		$globalCheck = 0

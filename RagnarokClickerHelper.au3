@@ -20,7 +20,8 @@ Local $AutomaticModeTogglePeriod = 2.5*60*1000
 
 Local $EnableAutomaticPeriodicSkillsActivation = True
 Local $SkillSafeMargin = 1*01*01*0400
-Local $Skill_Key[9]
+Local $numberOfSkills = 9
+Local $Skill_Key[$numberOfSkills]
 $Skill_Key[0] = "&"
 $Skill_Key[1] = "é"
 $Skill_Key[2] = '"'
@@ -30,7 +31,7 @@ $Skill_Key[5] = '-'
 $Skill_Key[6] = 'è'
 $Skill_Key[7] = '_'
 $Skill_Key[8] = 'ç'
-Local $Skill_TriggerPeriod[9]
+Local $Skill_TriggerPeriod[$numberOfSkills]
 $Skill_TriggerPeriod[0] = 1*10*60*1000 + $SkillSafeMargin
 $Skill_TriggerPeriod[1] = 1*10*60*1000 + $SkillSafeMargin
 $Skill_TriggerPeriod[2] = 1*30*60*1000 + $SkillSafeMargin
@@ -40,7 +41,7 @@ $Skill_TriggerPeriod[5] = 8*60*60*1000 + $SkillSafeMargin
 $Skill_TriggerPeriod[6] = 1*60*60*1000 + $SkillSafeMargin
 $Skill_TriggerPeriod[7] = 1*60*60*1000 + $SkillSafeMargin
 $Skill_TriggerPeriod[8] = 1*60*60*1000 + $SkillSafeMargin
-Local $Skill_LastTriggerTime[9]
+Local $Skill_LastTriggerTime[$numberOfSkills]
 $Skill_LastTriggerTime[0] = Null
 $Skill_LastTriggerTime[1] = Null
 $Skill_LastTriggerTime[2] = Null
@@ -73,6 +74,13 @@ Local $numberOfClicks = 1
 Func StopLoop()
 	$continueLoop = false
  EndFunc
+ 
+Func SkillTimeToHumanReadableString($time)
+   $milliseconds = Mod(floor($time),1000)
+   $seconds = Mod(floor($time/(1000)),60)
+   $minutes = Mod(floor($time/(60*1000)),60)
+   Return StringFormat("%03dm%02ds%04d",$minutes,$seconds,$milliseconds)
+EndFunc
 
 Func TimeToLogginHumanReadableString($time)
    $milliseconds = Mod(floor($time),1000)
@@ -92,6 +100,14 @@ Func SendKeyIfConditionIsMet( $previousLoopValue, $currentLoopValue, $period, $k
 	  CustomLog( $logMessage )
 	  Send($key)
    EndIf
+EndFunc
+
+Func TimeBeforeActivationOfSkillWithIndex($skillIndex)
+	If $Skill_TriggerPeriod[$skillIndex] > 0 And $Skill_LastTriggerTime[$skillIndex] <> Null Then
+		return $Skill_TriggerPeriod[$skillIndex] - ( TimerDiff($checkLoopTimer) - $Skill_LastTriggerTime[$skillIndex] )
+	Else
+		return 0
+	EndIf
 EndFunc
 
 Func TriggerIfPossibleSkillWithIndex($skillIndex)
